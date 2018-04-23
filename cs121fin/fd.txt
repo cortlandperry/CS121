@@ -1,0 +1,74 @@
+You can put your answers for Problem 3 in this file.  Follow this notation for
+writing your answers in text format:
+
+ * You can write functional dependencies as A -> B
+
+ * You can write a set of functional dependencies as { A -> BC, C -> D }
+
+ * You can write attribute-set closure as {A}+ etc.
+
+ * You can write multivalued dependencies as A ->> B
+
+ * When writing relation schemas, you can indicate primary-key attributes
+   by enclosing them with underscores, e.g. R1(_A_, B, C), R2(_C_, D)
+
+ * Don't forget that primary key attributes should always come first
+   when writing relation schemas
+
+-- [Problem 3a]
+AC is a candidate key.
+
+{AC}+ = AC (initial)
+{AC}+ = ABC (C->B)
+{AC}+ = ABCH (AC -> H)
+{AC}+ = ABCGH (C -> G)
+{AC}+ = ABCGHI (CG -> I)
+
+Thus, AC is a super key.
+Now, we check if any of its proper subsets are also super keys. If not, it is a candidate key.
+
+{A}+ = A (That is all)
+{C}+ = CG (C -> G)
+{C}+ = CGI (G -> I)
+{C}+ = CGIB (C -> B) (End)
+
+Thus, neither of its subsets are suberkeys, so AC is a candidate key.
+
+-- [Problem 3b]
+Start: F_c = F = { G → B, AB → H, C → B, CG → I, C → G, G → I }.
+
+Step 1: Collapse using the union rule:
+
+F_c = {G -> BI, AB -> H, C -> BG, CG -> I}
+
+Step 2: Find extraneous attributes:
+G in CG -> I is extraneous, because in altered set:
+C -> BG, CG -> I
+
+Now, F_c = {G -> BI, AB -> H C -> BG, C-> I}
+
+Step 3: Use union rule again:
+F_c = {G -> BI, AB -> H C -> BGI}
+
+Step 4: 
+BI are an extraneous attribute in C -> BGI. Without BI in our altered set,
+we can infer C -> BI from:
+C -> G, G-> BI
+
+Now, F_c = {G -> BI, AB -> H, C-> G}
+
+No dependency has the same left hand side, and no two dependencies has any extraneous attributes, thus it it is our final result.
+
+-- [Problem 3c]
+To create a 3NF schema, we will run through our dependencies in our canonical cover in order:
+R_1 = (_G_, B, I)
+R_2 = (_A_, _B_, H)
+R_3 = (_C_, G)
+
+This is because for each dependency, a->b, a U b is not contained in the previous relational schemas, by definition of our cover. AC is our candidate key for R (from part A). We also need to include this in our 3NF schema.
+
+R_4 = (_A_, _C_)
+
+This is the complete 3NF decomposition.
+
+

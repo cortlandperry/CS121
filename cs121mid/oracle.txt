@@ -1,0 +1,8 @@
+-- [Problem 18]
+The reason why this takes so long, is that even though there is an index on a in t1, every time the index removes one of those values from a, the index has to preform a file scan on the entirety of t2, because databases preform referential integrity checks automatically. This means the oracle database will try and do what we did in our first step, but do it once for every single value that we remove from our database, and if that takes 15 minutes for each value we remove for t1, it will take us multiple hours to complete our query. 
+To improve this performance, we can do two things: 1, we can create an index on our table in t2 on a that will increase the speed of deleting values in t2:
+CREATE INDEX a_index ON t2(a)
+
+2) we can alter the database schema so that it does not automatically search through t2 by making the a in t2 not have a foreign key constraint on t1 until after we preform the query, and we will manually delete the items from t2 on our own.
+
+

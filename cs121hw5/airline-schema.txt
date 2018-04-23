@@ -1,0 +1,69 @@
+Write the relational model schema for your airline database in this file, using
+the notation we have used all term.  You can indicate primary key columns by
+enclosing the attribute names in _ characters.  Include descriptions of other
+candidate keys or foreign keys (if any) immediately under each relation schema.
+Example:
+
+foo(_a_, b, c)
+ * b is also a candidate key
+ * c is a foreign key to bar.c
+------------------------------------------------------------------------------
+
+-- [Problem 4]
+
+customer(_cust_id_, first_name, last_name, email)
+* email is a candidate key
+
+purchaser(_cust_id_, credit_card, exp_date, VR_code)
+* cust_id is a foreign key to customer.cust_id
+
+traveler(_cust_id_, passport_num, citizenship, emer_contact, emer_phone, flyer_num)
+* cust_id is a foreign key to customer.cust_id
+* (passport_num, citizenship) is a candidate key
+* flyer_num is a candidate key
+
+phone_numbers(_cust_id_, _phone_num_)
+* cust_id is a foreign key to customer.cust_id
+
+purchase(_purchase_id_, time_occur, comf_num)
+* comf_num is a candidate key
+
+purchaser_purchase(_purchase_id_, cust_id)
+* purchase_id is a foreign key to purchase.purchase_id
+* cust_id is a foreign key to purchaser.cust_id
+
+ticket(_ticket_id_, sale_price)
+
+ticket_purchase(_ticket_id_, purchase_id)
+* ticket_id is a foreign key to ticket.ticket_id
+* purchase_id is a foreign key to purchase.purchase_id
+
+ticket_traveler(_ticket_id_, cust_id)
+* ticket_id is a foreign key to ticket.ticket_id
+* cust_id is a foreign key to traveler.cust_id
+
+flight(_flight_num_, _date_, time, source, destination, domestic)
+
+airplane(_IATA_, model, manufacturer)
+
+seat(_IATA_, _seat_no_, class, seat_type, exit_flag)
+* IATA is a foreign key to airplane.IATA
+
+flight_airplane(_flight_num_, _date_, IATA)
+* flight_num is a foreign key to flight.flight_num
+* date is a foreign key to flight.date
+* IATA is a foreign key to airplane.IATA
+
+tickets_flights(_ticket_id_, flight_num, date, IATA, seat_no)
+* ticket_id is a foreign key to ticket.ticket_id
+* flight_num, date, IATA, seat_no is a candidate key
+* flight_num is a foreign key to flight.flight_num
+* date is a foreign key to flight.date
+* IATA is a foreign key to airplane.IATA
+* seat_no is a foreign key to seat.seat_no
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+You can put your answers for Problem 4 in this file.  Follow this notation for
+writing your answers in text format:
+
+ * You can write functional dependencies as A -> B
+
+ * You can write a set of functional dependencies as { A -> BC, C -> D }
+
+ * You can write attribute-set closure as {A}+ etc.
+
+ * You can write multivalued dependencies as A ->> B
+
+ * When writing relation schemas, you can indicate primary-key attributes
+   by enclosing them with underscores, e.g. R1(_A_, B, C), R2(_C_, D)
+
+ * Don't forget that primary key attributes should always come first
+   when writing relation schemas
+
+-- [Problem 4a]
+There are a few major dependencies that we get in our database.
+tutor_id -> name, email, grad_date. 
+This is because all of the data about the specified is reliant on the id of the tutor.
+(bc tutor_id is the primary key, so it determines everything else)
+
+tutor_id ->> topic
+This is because the topic is determined by what the tutor teaches, but it can have many different values.
+
+
+
+
+-- [Problem 4b]
+There are no other functional dependencies specified by the second relational schema. This isn’t good, because there are other dependencies we would like to have in our database other than the ones immediately found by the information that the tutor gives (name, email, and graduation date). The whole point of these people splitting their database into two tables is because they wanted to reference the topics that each tutor knows. Our database at the moment thus is similar to Boyce Codd normal form, in that it does not have any redundant dependencies, but it also is missing necessary dependencies that would help hold information. Thus, our above scheme is not an optimal design. 
+
+
+-- [Problem 4c]
+My new, better design would be implemented in 4NF, because the database in the system will be relatively small, and we need a multivalued dependency. (only a finite number of tutors at the school). This means that the extra constraints that will be enforced will be acceptable, because there is not nearly as much information being stored. First, I would keep the schema tutors exactly the same. Then, I would have a schema called tutor_topics(_tutor_id_, _topic_) which would represent the tutor and topic combinations, where tutor_id has a multivalued dependency to topic. Then, we know that the course_id and course_num are determined by each topic, so we can have a final schema that is
+courses(_topic_, course_name, course_num). This will preserve more dependencies and have our database run more smoothly because it will be more practical for the size and scope of the school operation.
+
+
+
+

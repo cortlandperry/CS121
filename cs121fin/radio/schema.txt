@@ -1,0 +1,43 @@
+You can put your answers for Problem 1.2 in this file.
+------------------------------------------------------
+Primary Keys are Specified by _primarykey_ in the schema, like was allowed in HW5.
+
+audio_files(_audio_id_, path, filename, length)
+* path is a Candidate Key
+
+song(_audio_id_, intro_length, is_explicit)
+* audio_id is a foreign key to audio_files.audio_id
+
+tag(_audio_id_, _tag_val_)
+* audio_id is a foreign key to song.audio_id
+
+Since each ad has a company, we can combine the ad and ad_company schemas like so:
+
+ads(_audio_id_, ad_start, ad_end, price, company_id)
+* audio_id is a foreign key to audio_files.audio_id
+* company_id is a foreign key to company.company_id
+* A NOT NULL constraint must be placed on company_id for total participation 
+
+promos(_audio_id_, promo_type, promo_url)
+* audio_id is a foreign key to audio_files.audio_id
+
+Since every start_time, end_time has something played on the playlist, we can
+combine the playlist and master_playlist schemas:
+
+playlist(_start_time_, end_time, is_request, audio_id)
+* audio_id is a foreign key to audio_files.audio_id
+* a NOT NULL constraint must be placed on audio_id for total participation
+
+artist(_artist_id_, artist_name)
+
+company(_company_id_, company_name)
+
+contact_emails(_company_id_, _contact_email_)
+* company_id is a foreign key to company.company_id
+
+song_artists(_artist_id_, _audio_id_)
+* audio_id is a foreign key to song.audio_id
+* artist_id is a foreign key to artist
+* a NOT NULL constraint must be placed on artist_id to enforce total participation
+
+
